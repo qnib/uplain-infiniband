@@ -22,8 +22,11 @@ RUN apt-get update \
         linux-headers-4.4.0-92-generic \
         python-libxml2 \
  # Download and install Mellanox OFED 4.2.1 for Ubuntu 16.04
- && wget http://content.mellanox.com/ofed/${MOFED_SITE_PLACE}/${MOFED_IMAGE} \
- && tar -xzvf ${MOFED_IMAGE} \
- && ${MOFED_DIR}/mlnxofedinstall --user-space-only --without-fw-update --all -q \
- && cd .. \
- && rm -rf ${MOFED_DIR} *.tgz /var/lib/apt/lists/*
+ && mkdir -p /tmp/ofed \
+ && echo
+ RUN mkdir -p /tmp/ofed \
+ && cd /tmp/ofed\
+ && wget -q http://content.mellanox.com/ofed/${MOFED_SITE_PLACE}/${MOFED_IMAGE} \
+ && tar -xzvf /tmp/ofed/${MOFED_IMAGE} \
+ && /tmp/ofed/${MOFED_DIR}/mlnxofedinstall --user-space-only --without-fw-update --all -q \
+ && rm -rf /tmp/ofed *.tgz /var/lib/apt/lists/*
